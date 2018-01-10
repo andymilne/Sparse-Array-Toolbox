@@ -1,7 +1,7 @@
 function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %SPSHIFT Shift dimensions of a sparse array structure.
 %
-%   spC = spShift(spA,shifts,isPer,isProg,collapse: Shift each dimension of the
+%   spC = spShift(spA,shifts,isPer,isProg,collapse): Shift each dimension of the
 %   full array represented as a sparse array structure by the amounts specified
 %   in the integer row vector or matrix 'shifts'. The output is a sparse array
 %   structure.
@@ -19,7 +19,7 @@ function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %   dimensions except the last are multiplied by the index of the last
 %   dimension. For example, if the shift value for the first dimension is m,
 %   the shift of that dimension when the final dimension's index is n is mn.
-%   Default is isPer = 0.
+%   Default is isProg = 0.
 %
 %   collapse == 1: the array is summed over this last dimension. Default is
 %   collapse = 0.
