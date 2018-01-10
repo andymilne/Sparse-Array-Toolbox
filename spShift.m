@@ -7,9 +7,9 @@ function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %   structure.
 %   
 %   When 'shifts' is a row vector, all entries of the array are shifted by the
-%   amounts specified in 'shifts': the nth entry of shifts is the shift for the
-%   nth dimension of the N-dimensional array. When 'shifts' is a matrix, its
-%   mth row gives the N-diensional shift for the mth nonzero element of the
+%   amounts specified in 'shifts': the nth entry of 'shifts' is the shift for
+%   the nth dimension of the N-dimensional array. When 'shifts' is a matrix,
+%   its mth row gives the N-diensional shift for the mth nonzero element of the
 %   full array (i.e., the mth entry of sparse array structure's 'Ind' and 'Val'
 %   fields).
 %
@@ -61,7 +61,7 @@ subs = spInd2spSub(spA);
 
 % Calculate progressive shifts (if isProg==1)
 if isProg == 1
-   shifts = (subs(:,end) - 1)*shifts; % make shift a function of value in last dimension
+   shifts = (subs(:,end) - 1)*shifts; % make shift proportional subscript in last dimension
 end
 
 % Apply shifts (non-circular or circular)
