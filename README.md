@@ -1,5 +1,7 @@
 # Sparse Array Toolbox
+
 1. Sparse array structures
+
 For sparse data, sparse formats can significantly increase speed and reduce memory requirements. However, MATLAB’s built-in sparse format represents only vectors and matrices. This toolbox contains a new sparse array structure and associated operations – outer, entrywise, and inner products, addition, summation, convolution, permutation, (circular) shifts, and distance measures – that can be applied to sparse representations of N-dimensional arrays.
 
 A sparse array structure has the following fields: Ind, which is a column vector of linear indices of nonzero values in the full array that they represent; Val, which is a column vector of the values at those indices; Size, which is a row vector of the sizes of each dimension of the full array – for example, a column vector with N entries has a size of N; a row vector with N entries has a size of (1,N); a matrix with N entries has a size (J,K), where JK = N; a three-way array with N entries has a size (J,K,L), where JKL = N.
