@@ -67,13 +67,18 @@ end
 % Apply shifts (non-circular or circular)
 if isPer == 0
     subShift = shifts + subs; % apply noncircular shifts to all subscripts
+    % Negative shifts can make some subscripts less than 1, hence all shifts in
+    % each dimension are offset by the most negative shift (so the smallest 
+    % shift is zero). Relative to these, positive shifts make the array
+    % dimension larger, so it must be appropriately expanded.
     negShifts = shifts;
-    negShifts(negShifts>0) = 0;
-    minNegShifts = min(negShifts,[],1);
-    maxShifts = max(shifts,[],1);
-    subShift = subShift - minNegShifts;
+    negShifts(negShifts>0) = 0; 
+    minNegShifts = min(negShifts,[],1); % most negative shift in each dimension
+    subShift = subShift - minNegShifts; % offset shifts
+    maxShifts = max(shifts,[],1); % greatest shift in each dimension
     % Convert subscripts to linear indices
-    indA = spSub2spInd(spA.Size+maxShifts-minNegShifts,subShift);
+    indA = spSub2spInd(spA.Size+maxShifts-minNegShifts, ...
+                       subShift); % expand array, if necessary
     spC = struct('Size',spA.Size+maxShifts-minNegShifts,...
                  'Ind',indA,'Val',spA.Val);
 else
