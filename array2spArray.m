@@ -1,13 +1,17 @@
 function spA = array2spArray(A)
 %ARRAY2SPARRAY Convert a full array into a sparse array structure.
-%   A sparse array structure has the following fields: 'Ind', which is a column
-%   vector of linear indices of nonzero values in the full array that they
-%   represent; 'Val', which is a column vector of the values at those indices;
+%   A sparse array structure has the following fields:
+%
 %   'Size', which is a row vector of the sizes of each dimension of the full
-%   array -- for example, a column vector with $N$ entries has a size of N; a
+%   array -- for example, a column vector with N entries has a size of N; a
 %   row vector with N entries has a size of (1,N); a matrix with N entries has
 %   a size (J,K), where JK = N; a three-way array with N entries has a size
-%   (J,K,L), where JKL = N.
+%   (J,K,L), where JKL = N;
+%
+%   'Ind', which is a column vector of linear indices of nonzero values in the
+%   full array that they represent;
+%
+%   'Val', which is a column vector of the values at those indices.
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
