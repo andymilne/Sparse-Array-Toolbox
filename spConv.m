@@ -38,9 +38,9 @@ indCSizA = indCSizA(:);
 valC = spA.Val.*spB.Val';
 valC = valC(:);
 sparseC = sparse(indCSizA,1,valC); % Accumulate (sum) over repeated indices
-[indCSizA,~,valC] = find(sparseC);
 
 % Convert linear indices to subs for an array of size A
+[indCSizA,~,valC] = find(sparseC);
 spC = struct('Size',spA.Size,'Ind',indCSizA,'Val',valC);
 subsC = spInd2spSub(spC);
     
