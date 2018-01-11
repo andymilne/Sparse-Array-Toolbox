@@ -79,6 +79,7 @@ if isPer == 0
     % Convert subscripts to linear indices
     indA = spSub2spInd(spA.Size+maxShifts-minNegShifts, ...
                        subShift); % expand array, if necessary
+    % Make the sparse array structure
     spC = struct('Size',spA.Size+maxShifts-minNegShifts,...
                  'Ind',indA,'Val',spA.Val);
 else
