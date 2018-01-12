@@ -5,8 +5,8 @@ function spC = spPlus(varargin)
 %   entered as a comma separated list or as a members of a cell. The output is
 %   a sparse array structure.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   Version 1.01 by Andrew J. Milne, The MARCS Institute, Western Sydney
+%   University, 2018-01-13
 %
 %   See also SPARSE.
 
@@ -19,23 +19,25 @@ else
 end
 nSpA = size(spA,2); % count the number of arguments
 
-% Check all arrays have equivalent size
+% Check all arrays have equivalent size and get their numbers of indices
+nInd = nan(nSpA,1);
+nInd(1) = numel(spA{1}.Ind);
 for i = 2:nSpA
     sizA = spA{i}.Size;
     sizAprev = spA{i-1}.Size;
     if sizA ~= sizAprev
         error('All full arrays must have the same size.')
     end
+    nInd(i) = numel(spA{i}.Ind);
 end
+cumSumInd = [0;cumsum(nInd)];
 
 % Concatenate indices and values from all sparse arrays
-indSpCat = spA{1}.Ind;
-valSpCat = spA{1}.Val;
-for i = 2:nSpA
-    indSpCati = spA{i}.Ind;
-    valSpCati = spA{i}.Val;
-    indSpCat = [indSpCat; indSpCati];
-    valSpCat = [valSpCat; valSpCati];
+indSpCat = zeros(cumSumInd(end),1);
+valSpCat = zeros(cumSumInd(end),1);
+for i = 1:nSpA
+    indSpCat(cumSumInd(i)+1:cumSumInd(i+1)) = spA{i}.Ind;
+    valSpCat(cumSumInd(i)+1:cumSumInd(i+1)) = spA{i}.Val;
 end
 % Accumulate (sum) across all repeated indices
 sumSpSpA = sparse(indSpCat,1,valSpCat); 
