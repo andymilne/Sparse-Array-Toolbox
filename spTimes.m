@@ -25,13 +25,14 @@ scalProd = 1;
 nScalars = 0;
 logIndScalars = false(nSpA,1);
 for i = 1:nSpA
-    if ~isstruct(spA{i}) 
+    if ~isstruct(spA{i}) && isscalar(spA{i})
         scalProd = scalProd*spA{i};
         logIndScalars(i) = true;
         nScalars = nScalars + 1;
         continue
     end
 end
+%logIndScalars
 
 if nScalars == nSpA
     spC = struct('Size',[],'Ind',1,'Val',scalProd);
@@ -39,6 +40,13 @@ if nScalars == nSpA
 end
 spA(logIndScalars) = [];
 nSpA = nSpA - nScalars;
+
+% Convert remaining (nonscalar) full array arguments to spare array structures
+for i = 1:nSpA
+    if ~isstruct(spA{i})
+        spA{i} = array2spArray(spA{i})
+    end
+end
 
 % Check all arrays have equivalent size
 for i = 2:nSpA
@@ -51,15 +59,14 @@ end
 
 % Find common indices and multiply their respective values
 indC = spA{1}.Ind;
-if nSpA > 1
-    for i = 2:nSpA
-        [Lia,Locb] = ismember(indC,spA{i}.Ind);
-        indC = Locb(Locb>0);
-    end
-    valC = scalProd*spA{1}.Val(Lia).*spA{2}.Val(indC);
-else
-    valC = scalProd*spA{1}.Val;
+valC = scalProd;
+for i = 1:nSpA
+    [~,Locb] = ismember(indC,spA{i}.Ind);
+    indC = Locb(Locb>0);
+    valC = valC.*spA{i}.Val(indC);
 end
+
+% Make the sparse array structure
 spC = struct('Size',spA{1}.Size,'Ind',indC,'Val',valC);
 
 end
