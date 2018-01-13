@@ -1,12 +1,13 @@
 function spC = spOuter(varargin)
 %SPOUTER THE Outer (tensor) product of sparse array structures.
 %   spC = spOuter(varargin): The outer (tensor) product of full arrays, each
-%   represented as a sparse array structure. The sparse array structures can be
-%   entered as a comma separated list or as a members of a cell. The output is
-%   a sparse array structure. Calculations are performed from left to right in
-%   the list. All singleton dimensions are removed: if A is a row vector of
-%   size (1,M) and B is a matrix of size (N,P), the resulting tensor has size
-%   (M,N,P), not size (1,M,N,P). The output is a sparse array structure.
+%   represented as a sparse array structure or as a standard scalar, or full
+%   array. The sparse array structures can be entered as a comma separated list
+%   or as a members of a cell. The output is a sparse array structure.
+%   Calculations are performed from left to right in the list. All singleton
+%   dimensions are removed: if A is a row vector of size (1,M) and B is a
+%   matrix of size (N,P), the resulting tensor has size (M,N,P), not size
+%   (1,M,N,P). The output is a sparse array structure.
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
@@ -18,6 +19,13 @@ elseif iscell(varargin{1})
     spA = varargin{:};
 end
 nSpA = size(spA,2); % count the number of arguments
+
+% Convert array entries (e.g., a scalar) to spare array structures
+for i = 1:nSpA
+    if ~isstruct(spA{i})
+        spA{i} = array2spArray(spA{i});
+    end
+end
 
 numPrev = 1;
 valspA = spA{1}.Val;
