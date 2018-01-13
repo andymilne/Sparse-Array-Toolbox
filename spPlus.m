@@ -23,7 +23,7 @@ nSpA = size(spA,2); % count the number of arguments
 for i = 2:nSpA
     sizA = spA{i}.Size;
     sizAprev = spA{i-1}.Size;
-    if sizA ~= sizAprev
+    if ~isequal(sizA,sizAprev)
         error('All full arrays must have the same size.')
     end
 end
