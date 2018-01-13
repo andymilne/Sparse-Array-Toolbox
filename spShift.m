@@ -5,7 +5,7 @@ function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %   full array represented as a sparse array structure by the amounts specified
 %   in the integer row vector or matrix 'shifts'. The output is a sparse array
 %   structure.
-%   
+%
 %   When 'shifts' is a row vector, all entries of the array are shifted by the
 %   amounts specified in 'shifts': the nth entry of 'shifts' is the shift for
 %   the nth dimension of the N-dimensional array. When 'shifts' is a matrix,
@@ -58,35 +58,31 @@ end
 
 % Convert linear indices to subscripts
 subs = spInd2spSub(spA);
-
 % Calculate progressive shifts (if isProg==1)
 if isProg == 1
-   shifts = (subs(:,end) - 1)*shifts; % make shift proportional subscript in last dimension
+    % make shift proportional subscript in last dimension
+    shifts = (subs(:,end) - 1)*shifts;
 end
 
 % Apply shifts (non-circular or circular)
 if isPer == 0
     subShift = shifts + subs; % apply noncircular shifts to all subscripts
     % Negative shifts can make some subscripts less than 1, hence all shifts in
-    % each dimension are offset by the most negative shift (so the smallest 
+    % each dimension are offset by the most negative shift (so the smallest
     % shift is zero). Relative to these, positive shifts make the array
     % dimension larger, so it must be appropriately expanded.
     negShifts = shifts;
-    negShifts(negShifts>0) = 0; 
+    negShifts(negShifts>0) = 0;
     minNegShifts = min(negShifts,[],1); % most negative shift in each dimension
     subShift = subShift - minNegShifts; % offset shifts
     maxShifts = max(shifts,[],1); % greatest shift in each dimension
-    % Convert subscripts to linear indices
-    indA = spSub2spInd(spA.Size+maxShifts-minNegShifts, ...
-                       subShift); % expand array, if necessary
+    % Convert subscripts to linear indices and expand array, if necessary
+    indA = spSub2spInd(spA.Size+maxShifts-minNegShifts,subShift); 
     % Make the sparse array structure
     spC = struct('Size',spA.Size+maxShifts-minNegShifts,...
-                 'Ind',indA,'Val',spA.Val);
+        'Ind',indA,'Val',spA.Val);
 else
-    subShift = subs;
-    for d = 1:nDimA % apply circular shifts to the subscripts
-        subShift(:,d) = mod(shifts(:,d)+subs(:,d)-1,spA.Size(d)) + 1;
-    end
+    subShift = mod(shifts+subs-1,spA.Size) + 1;
     % Convert subscripts to linear indices
     indA = spSub2spInd(spA.Size,subShift);
     % Accumulate (sum) over repeated indices
@@ -100,5 +96,5 @@ end
 if collapse == 1 % Accumulate (sum) values in collapsed dimension
     spC = spSum(spC,nDimA);
 else
-
+    
 end
