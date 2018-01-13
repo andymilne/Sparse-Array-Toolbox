@@ -17,7 +17,7 @@ end
 subA = spInd2spSub(spA); % get subscripts
 subA(:,dim) = 1; % collapse over dim
 indA = spSub2spInd(spA.Size,subA); % convert to linear index
-sumSpTerm = sparse(indA,1,spA.Val); % sum over repated indices
+sumSpTerm = sparse(indA,1,spA.Val); % sum over repeated indices
 
 [indA,~,valA] = find(sumSpTerm);
 spC = struct('Size',sumDim,'Ind',indA,'Val',valA);
