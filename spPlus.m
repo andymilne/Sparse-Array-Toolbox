@@ -20,25 +20,23 @@ end
 nSpA = size(spA,2); % count the number of arguments
 
 % Check all arrays have equivalent size and get their numbers of indices
-nInd = nan(nSpA,1);
-nInd(1) = numel(spA{1}.Ind);
 for i = 2:nSpA
     sizA = spA{i}.Size;
     sizAprev = spA{i-1}.Size;
     if sizA ~= sizAprev
         error('All full arrays must have the same size.')
     end
-    nInd(i) = numel(spA{i}.Ind);
 end
-cumSumInd = [0;cumsum(nInd)];
 
 % Concatenate indices and values from all sparse arrays
-indSpCat = zeros(cumSumInd(end),1);
-valSpCat = zeros(cumSumInd(end),1);
+indSpCell = cell(1,nSpA);
+valSpCell = cell(1,nSpA);
 for i = 1:nSpA
-    indSpCat(cumSumInd(i)+1:cumSumInd(i+1)) = spA{i}.Ind;
-    valSpCat(cumSumInd(i)+1:cumSumInd(i+1)) = spA{i}.Val;
+    indSpCell{i} = spA{i}.Ind;
+    valSpCell{i} = spA{i}.Val;
 end
+indSpCat = cat(1,indSpCell{:});
+valSpCat = cat(1,valSpCell{:});
 % Accumulate (sum) across all repeated indices
 sumSpSpA = sparse(indSpCat,1,valSpCat); 
 
