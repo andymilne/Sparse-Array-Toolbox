@@ -1,6 +1,8 @@
 function spC = spConv(spA,spB,shape)
 %SPCONV N-dimensional convolution of two N-dimensional sparse array structures.
-%   spC = spConv(spA,spB,shape)
+%   spC = spConv(spA,spB,shape): N-dimensional convolution of two N-dimensional
+%   full arrays, each represented as a sparse array structure or a full array.
+%   structures.
 %
 %   shape == 'full': full convolution (default). Its size is the sum of the
 %   sizes of its arguments.
@@ -16,6 +18,14 @@ function spC = spConv(spA,spB,shape)
 
 if nargin < 3
     shape = 'full';
+end
+
+% Convert full array arguments to sparse array structures
+if ~isstruct(spA)
+    spA = array2spArray(spA);
+end
+if ~isstruct(spB)
+    spB = array2spArray(spB);
 end
 
 % Get numbers of dimensions in spA and spB
@@ -45,12 +55,12 @@ spC = struct('Size',spA.Size,'Ind',indCSizA,'Val',valC);
 subsC = spInd2spSub(spC);
 
 % If 'shape' is 'full', convert subsC to linear indices for array of 
-% size A + size B
+% size A + size B - 1
 if isequal(shape,'full')
-    % Convert subsC to linear indices for array of size A + size B
-    indCSizAB = spSub2spInd(spA.Size + spB.Size, subsC);
+    % Convert subsC to linear indices for array of size A + size B - 1
+    indCSizAB = spSub2spInd(spA.Size+spB.Size-1, subsC);
     % Make into a sparse array structure
-    spC = struct('Size',spA.Size+spB.Size,'Ind',indCSizAB,'Val',valC);
+    spC = struct('Size',spA.Size+spB.Size-1,'Ind',indCSizAB,'Val',valC);
     
 % If 'shape' is 'circ', all spC's subs outside spA's size are wrapped
 elseif isequal(shape,'circ')
