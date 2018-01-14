@@ -41,7 +41,7 @@ end
 spA(lgclIndScalars) = [];
 nSpA = nSpA - nScalars;
 
-% Convert remaining (nonscalar) full array arguments to spare array structures
+% Convert remaining (nonscalar) full array arguments to sparse array structures
 for i = 1:nSpA
     if ~isstruct(spA{i})
         spA{i} = array2spArray(spA{i});
