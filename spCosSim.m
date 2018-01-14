@@ -1,8 +1,8 @@
 function s = spCosSim(spA,spB)
 %SPCOSSIM Cosine similarity of two sparse array structures
 %   s = spCosSim(spA,spB):  Cosine similarity of two vectorized full arrays,
-%   represented by sparse array structures, with the same numbers of entries.
-%   The output is a scalar.
+%   each represented as a sparse array structure or as a full array. They must
+%   have the same numbers of entries (including zeros). The output is a scalar.
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
@@ -11,12 +11,16 @@ function s = spCosSim(spA,spB)
 
 persistent innerAA innerBB spALast spBLast
 
-if ~isstruct(spA) || ~isstruct(spB)
-    error('Arguments must be (a cell array of) sparse array structures.')
+if nargin ~= 2
+    error('There must be exactly two arguments (arrays or sparse array structures).')
 end
 
-if nargin ~= 2
-    error('There must be exactly two sparse array structures.')
+% Convert full array arguments to sparse array structures
+if ~isstruct(spA)
+    spA = array2spArray(spA);
+end
+if ~isstruct(spB)
+    spB = array2spArray(spB);
 end
 
 spANew = ~isequal(spA,spALast);

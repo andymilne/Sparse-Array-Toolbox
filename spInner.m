@@ -15,13 +15,11 @@ if ~iscell(varargin{1})
     spA = varargin;
 elseif iscell(varargin{1})
     spA = varargin{:};
-else
-    error('Arguments must be (a cell array of) sparse array structures.')
 end
 nSpA = size(spA,2); % count the number of arrays
 
 if nSpA ~= 2
-    error('There must be exactly two sparse array structures.')
+    error('There must be two arguments (sparse array structures or full arrays).')
 end
 
 % Convert full array arguments to sparse array structures
