@@ -43,8 +43,8 @@ sparseC = sparse(indCSizA,1,valC); % Accumulate (sum) over repeated indices
 [indCSizA,~,valC] = find(sparseC);
 spC = struct('Size',spA.Size,'Ind',indCSizA,'Val',valC);
 subsC = spInd2spSub(spC);
-    
-% If 'shape' is 'full', convert spC's subs to linear indices for array of 
+
+% If 'shape' is 'full', convert subsC to linear indices for array of 
 % size A + size B
 if isequal(shape,'full')
     % Convert subsC to linear indices for array of size A + size B
@@ -55,10 +55,7 @@ if isequal(shape,'full')
 % If 'shape' is 'circ', all spC's subs outside spA's size are wrapped
 elseif isequal(shape,'circ')
     % Wrap subsC outside sizeA
-    subsCWrap = zeros(size(subsC));
-    for i = 1:nDimA
-        subsCWrap(:,i) = mod(subsC(:,i)-1,spA.Size(1)) + 1;
-    end
+    subsCWrap = mod(subsC-1,spA.Size) + 1;
     % Convert wrapped subsC to linear index for size A
     indC = spSub2spInd(spA.Size, subsCWrap);
     % Accumulate (sum) over repeated indices
@@ -69,13 +66,10 @@ elseif isequal(shape,'circ')
     
 % If 'shape' is 'same', all spC's subs outside spA's size are removed
 elseif isequal(shape,'same')
-    % Remove subsCSizAB outside sizeA
+    % Remove subsC outside sizeA
     subsCTrunc = subsC;
-    for i = 1:nDimA
-        subsCTrunc(subsCTrunc>spA.Size(i)) = 0;
-    end
-    valC(prod(subsCTrunc,2)==0,:) = [];
-    subsCTrunc(prod(subsCTrunc,2)==0,:) = []; 
+    valC  = valC(all(subsCTrunc<=spA.Size,2),:);
+    subsCTrunc = subsCTrunc(all(subsCTrunc<=spA.Size,2),:); 
     % convert subsCTrunc to linear index for SizA
     indC = spSub2spInd(spA.Size,subsCTrunc);
     % Make into a sparse array structure
@@ -83,4 +77,3 @@ elseif isequal(shape,'same')
 end
 
 end
-
