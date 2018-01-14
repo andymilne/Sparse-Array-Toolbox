@@ -29,10 +29,7 @@ if prod(spA{1}.Size) ~= prod(spA{2}.Size)
     error('Both full arrays must have the same number of entries.')
 end
 
-% Find common indices
-[Lia,Locb] = ismember(spA{1}.Ind,spA{2}.Ind);
-Locb = Locb(Locb>0);
-C = spA{1}.Val(Lia).*spA{2}.Val(Locb);
-c = sum(C);
+spC = spTimes(spA{1},spA{2});
+c = sum(spC.Ind);
 
 end
