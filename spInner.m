@@ -29,7 +29,7 @@ if prod(spA{1}.Size) ~= prod(spA{2}.Size)
     error('Both full arrays must have the same number of entries.')
 end
 
-spC = spTimes(spA{1},spA{2});
-c = sum(spC.Val);
+C = spA{1}.Val.*spA{2}.Val;
+c = sum(C(:));
 
 end
