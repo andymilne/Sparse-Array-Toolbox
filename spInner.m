@@ -24,12 +24,19 @@ if nSpA ~= 2
     error('There must be exactly two sparse array structures.')
 end
 
-% Check both sparse array strucures have the same numbers of elements 
+% Convert full array arguments to sparse array structures
+for i = 1:nSpA
+    if ~isstruct(spA{i})
+        spA{i} = array2spArray(spA{i});
+    end
+end
+
+% Check both sparse array strucures have the same numbers of elements
 if prod(spA{1}.Size) ~= prod(spA{2}.Size)
     error('Both full arrays must have the same number of entries.')
 end
 
-C = spA{1}.Val.*spA{2}.Val;
-c = sum(C(:));
+spC = spTimes(spA{1},spA{2});
+c = sum(spC.Val);
 
 end
