@@ -1,10 +1,10 @@
 function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %SPSHIFT Shift dimensions of a sparse array structure.
 %
-%   spC = spShift(spA,shifts,isPer,isProg,collapse): Shift each dimension of the
-%   full array represented as a sparse array structure by the amounts specified
-%   in the integer row vector or matrix 'shifts'. The output is a sparse array
-%   structure.
+%   spC = spShift(spA,shifts,isPer,isProg,collapse): Shift each dimension of
+%   the full array (represented as a sparse array structure or a full array) by
+%   the amounts specified in the integer row vector or matrix 'shifts'. The
+%   output is a sparse array structure.
 %
 %   When 'shifts' is a row vector, all entries of the array are shifted by the
 %   amounts specified in 'shifts': the nth entry of 'shifts' is the shift for
@@ -38,6 +38,11 @@ if nargin < 4
 end
 if nargin < 3
     isPer = 1;
+end
+
+% If full array, convert to sparse array structure
+if ~isstruct(spA)
+    spA = array2spArray(spA);
 end
 
 nDimA = size(spA.Size,2);

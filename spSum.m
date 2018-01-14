@@ -1,13 +1,18 @@
 function spC = spSum(spA,dim)
 %SPSUM Sum sparse array structure over dimension 'dim'.
 %   spC = spSum(spA,dim): Sum full array, represented as a sparse array
-%   structure, over the dimension specified as a scalar in 'dim'. The output is
-%   a sparse array structure.
+%   structure or a full array, over the dimension specified as a scalar in
+%   'dim'. The output is a sparse array structure.
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
 %
 %   See also SPIND2SPSUB, SPSUB2SPIND, SPARSE.
+
+% If full array, convert to sparse array structure
+if ~isstruct(spA)
+    spA = array2spArray(spA);
+end
 
 sumDim = spA.Size;
 if dim <= numel(spA.Size)
