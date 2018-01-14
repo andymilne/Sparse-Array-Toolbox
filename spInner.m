@@ -1,5 +1,5 @@
 function c = spInner(varargin)
-%SPINNER Inner (scalar) product of two sparse array strucures.
+%SPINNER Inner (scalar) product of two sparse array structures.
 %   c = spInner(varargin): Inner (scalar) product of two full arrays, each
 %   represented as a sparse array structure or a full array. There are
 %   alternative definitions of 'inner product' for tensors/arrays. Here, it is
