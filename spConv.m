@@ -2,7 +2,7 @@ function spC = spConv(spA,spB,shape)
 %SPCONV N-dimensional convolution of two N-dimensional sparse array structures.
 %   spC = spConv(spA,spB,shape): N-dimensional convolution of two N-dimensional
 %   full arrays, each represented as a sparse array structure or a full array.
-%   structures.
+%   The output is a sparse array structure.
 %
 %   shape == 'full': full convolution (default). Its size is the sum of the
 %   sizes of its arguments.
