@@ -23,43 +23,55 @@ end
 % Find scalars' positions, number, and product
 scalProd = 1;
 nScalars = 0;
-logIndScalars = false(nSpA,1);
+lgclIndScalars = false(nSpA,1);
 for i = 1:nSpA
-    if ~isstruct(spA{i}) 
+    if ~isstruct(spA{i}) && isscalar(spA{i})
         scalProd = scalProd*spA{i};
-        logIndScalars(i) = true;
+        lgclIndScalars(i) = true;
         nScalars = nScalars + 1;
         continue
     end
 end
 
+% Remove all scalars (if all entries are scalars return their product) 
 if nScalars == nSpA
     spC = struct('Size',[],'Ind',1,'Val',scalProd);
     return
 end
-spA(logIndScalars) = [];
+spA(lgclIndScalars) = [];
 nSpA = nSpA - nScalars;
 
-% Check all arrays have equivalent size
-for i = 2:nSpA
-    sizA = spA{i}.Size;
-    sizAprev = spA{i-1}.Size;
-    if sizA ~= sizAprev
-        error('The sizes of the original full arrays must be equal.')
+% Convert remaining (nonscalar) full array arguments to spare array structures
+for i = 1:nSpA
+    if ~isstruct(spA{i})
+        spA{i} = array2spArray(spA{i});
     end
 end
 
-% Find common indices and multiply their respective values
-indC = spA{1}.Ind;
+% Check remaining (nonscalar) arrays have equivalent sizes
 if nSpA > 1
     for i = 2:nSpA
-        [Lia,Locb] = ismember(indC,spA{i}.Ind);
-        indC = Locb(Locb>0);
+        sizA = spA{i}.Size;
+        sizAprev = spA{i-1}.Size;
+        if sizA ~= sizAprev
+            error('The sizes of the original full arrays must be equal.')
+        end
     end
-    valC = scalProd*spA{1}.Val(Lia).*spA{2}.Val(indC);
-else
-    valC = scalProd*spA{1}.Val;
 end
-spC = struct('Size',spA{1}.Size,'Ind',indC,'Val',valC);
+
+% Find common indices across input arrays
+comInd = spA{1}.Ind;
+for i = 2:nSpA
+    comInd = intersect(comInd,spA{i}.Ind);
+end
+% Multiply over common indices
+valC = scalProd;
+for i = 1:nSpA
+    lgclComInd = ismember(spA{i}.Ind(:),comInd);
+    valC = valC.*spA{i}.Val(lgclComInd);
+end
+
+% Make sparse array sructure
+spC = struct('Size',spA{1}.Size,'Ind',comInd,'Val',valC);
 
 end
