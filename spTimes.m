@@ -71,7 +71,7 @@ for i = 1:nSpA
     valC = valC.*spA{i}.Val(lgclComInd);
 end
 
-% Make sparse array sructure
+% Make sparse array structure
 spC = struct('Size',spA{1}.Size,'Ind',comInd,'Val',valC);
 
 end
