@@ -30,6 +30,6 @@ if prod(spA{1}.Size) ~= prod(spA{2}.Size)
 end
 
 spC = spTimes(spA{1},spA{2});
-c = sum(spC.Ind);
+c = sum(spC.Val);
 
 end
