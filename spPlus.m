@@ -1,9 +1,9 @@
 function spC = spPlus(varargin)
 %SPPLUS The sum of sparse array strucures with equivalent size
-%   spC = spPlus(varargin): The sum of identically sized full arrays,
-%   each represented as a sparse array structure. The sparse arrays can
-%   entered as a comma separated list or as a members of a cell. The output is
-%   a sparse array structure.
+%   spC = spPlus(varargin): The sum of identically sized full arrays, each
+%   represented as a sparse array structure or as a full array. The sparse
+%   arrays can entered as a comma separated list or as a members of a cell. The
+%   output is a sparse array structure.
 %
 %   Version 1.01 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-13
@@ -18,6 +18,13 @@ else
     spA = varargin{:};
 end
 nSpA = size(spA,2); % count the number of arguments
+
+% Convert full array arguments to sparse array structures
+for i = 1:nSpA
+    if ~isstruct(spA{i})
+        spA{i} = array2spArray(spA{i});
+    end
+end
 
 % Check all arrays have equivalent size and get their numbers of indices
 for i = 2:nSpA
