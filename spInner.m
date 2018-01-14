@@ -1,11 +1,11 @@
 function c = spInner(varargin)
 %SPINNER Inner (scalar) product of two sparse array strucures.
-%   c = spInner(varargin): Inner (scalar) product of two full arrays
-%   represented by sparse array structures. There are alternative definitions
-%   of 'inner product' for tensors/arrays. Here, it is their scalar product --
-%   the sum of entries resulting from their entrywise (Hadamard) product. The
-%   sparse arrays can entered as a comma separated list or as a members of a
-%   cell.
+%   c = spInner(varargin): Inner (scalar) product of two full arrays, each
+%   represented as a sparse array structure or a full array. There are
+%   alternative definitions of 'inner product' for tensors/arrays. Here, it is
+%   their scalar product -- the sum of entries resulting from their entrywise
+%   (Hadamard) product. The sparse arrays can entered as a comma separated list
+%   or as a members of a cell.
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
