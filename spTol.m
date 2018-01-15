@@ -1,8 +1,8 @@
 function spC = spTol(spA,tol)
-%SPTOL Remove all entries with magnitudes smaller than 'tol'.
-%   spC = spTol(spA,tol): Remove all entries from a full array -- represented
-%   as a sparse array structure or a full array -- with magnitudes smaller than
-%   'tol'. The output is a sparse array structure
+%SPTOL Make all entries with magnitudes smaller than 'tol' equal to zero.
+%   spC = spTol(spA,tol): Make all entries of a full array (represented as a
+%   sparse array structure or a full array) with magnitudes smaller than 'tol'
+%   equal to zero. The output is a sparse array structure
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-16
