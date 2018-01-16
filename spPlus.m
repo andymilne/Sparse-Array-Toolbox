@@ -8,7 +8,7 @@ function spC = spPlus(varargin)
 %   Version 1.01 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-13
 %
-%   See also SPARSE.
+%   See also SPARSE, PLUS.
 
 % Check whether varargin is a list of structures (e.g., sparse arrays) or a 
 % cell array of structures.

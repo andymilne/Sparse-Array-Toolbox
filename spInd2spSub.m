@@ -4,7 +4,7 @@ function subsA = spInd2spSub(spA)
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
 %   
-%   See also SPSUB2SPIND.
+%   See also SPSUB2SPIND, IND2SUB.
 
 % Convert spA's linear index to subscripts
 nDimA = numel(spA.Size);

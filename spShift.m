@@ -27,7 +27,7 @@ function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %   Version 1.1 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
 %
-%   See also SPIND2SPSUB, SPSUB2SPIND, SPSUM.
+%   See also SPIND2SPSUB, SPSUB2SPIND, SPSUM, CIRCSHIFT.
 
 % Defaults
 if nargin < 5
@@ -55,10 +55,12 @@ if size(shifts,1)>1 && isProg==1
     error('''shifts'' must be a row vector, not a matrix, when isProg = 1.')
 end
 if size(shifts,2) ~= nDimA
-    error('''shifts'' must have the same number of columns as the number of dimensions in the full array.')
+    error(['''shifts'' must have the same number of columns as ', ...
+           'the number of dimensions in the full array.'])
 end
 if size(shifts,1)~=1 && size(shifts,1)~=numel(spA.Ind)
-    error('''shifts'' must be a row vector or have the same number of rows as nonzero entries in the sparse array structure.')
+    error(['''shifts'' must be a row vector or have the same number of ', ...
+           'rows as nonzero entries in the sparse array structure.'])
 end
 
 % Convert linear indices to subscripts

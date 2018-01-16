@@ -7,6 +7,8 @@ function spC = spTimes(varargin)
 %
 %   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
 %   University, 2018-01-09
+%
+%   See also TIMES.
 
 % Check whether varargin is a comma separated list or a cell array
 if ~iscell(varargin{1})
