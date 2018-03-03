@@ -11,10 +11,9 @@ function spC = spConv(spA,spB,shape)
 %
 %   shape == 'circ': circular convolution over the size of spA.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
-%   See also SPIND2SPSUB, SPSUB2SPIND, SPARSE, CONV, CCONV.
+%   See also SPIND2SPSUB, SPSUB2SPIND, SPARSE, CONVN, CCONV.
 
 if nargin < 3
     shape = 'full';
@@ -35,55 +34,58 @@ if nDimA ~= nDimB
     error('The two arrays must have the same numbers of dimensions.')
 end
 
-% Convert spB's linear index to subscripts
+%% Convert indices to those of an array of size spA.Size+spB.Size-1
+sizC = spA.Size+spB.Size-1;
+% Convert linear indices to subscripts
+subsA = spInd2spSub(spA);
 subsB = spInd2spSub(spB);
-
-% Convert spB's subscripts back to a linear index, but taking the size of the
-% array to be the same as spA (in non-sparse terms, this is zero padding)
-indBSzA = spSub2spInd(spA.Size,subsB);
+% Convert subscripts back to a linear indices, but taking the size
+% of the array to be the same as spA + spB - 1 (in non-sparse terms,
+% this is zero padding)
+indASzC = spSub2spInd(sizC,subsA);
+indBSzC = spSub2spInd(sizC,subsB);
 
 % Do the convolution
-indCSizA = spA.Ind + indBSzA' - 1;
-indCSizA = indCSizA(:);
-valC = spA.Val.*spB.Val';
+indC = indASzC + indBSzC' - 1; % Outer sum of indices, minus 1
+indC = indC(:);
+valC = spA.Val.*spB.Val'; % Outer product of values
 valC = valC(:);
-sparseC = sparse(indCSizA,1,valC); % Accumulate (sum) over repeated indices
+sparseC = sparse(indC,1,valC); % Accumulate (sum) over repeated indices
 
-% Convert linear indices to subs for an array of size A
-[indCSizA,~,valC] = find(sparseC);
-spC = struct('Size',spA.Size,'Ind',indCSizA,'Val',valC);
-subsC = spInd2spSub(spC);
+% Make sparse array structure for full convolution
+[indC,~,valC] = find(sparseC);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+spC = struct('Size',sizC,'Ind',indC,'Val',valC);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% If 'shape' is 'full', convert subsC to linear indices for array of 
-% size A + size B - 1
-if isequal(shape,'full')
-    % Convert subsC to linear indices for array of size A + size B - 1
-    indCSizAB = spSub2spInd(spA.Size+spB.Size-1, subsC);
+if isequal(shape,'same') % Remove entries outside size A
+    % Convert linear indices of spC to subs
+    subsC = spInd2spSub(spC);
+    % Remove subsC outside sizeA
+    subsCTrunc = subsC;
+    indCTrunc = all(subsCTrunc<=spA.Size,2);
+    valC = valC(indCTrunc,:);
+    subsCTrunc = subsCTrunc(indCTrunc,:);
+    % convert subsCTrunc to linear index for array of size spA.Size
+    indC = spSub2spInd(spA.Size,subsCTrunc);
     % Make into a sparse array structure
-    spC = struct('Size',spA.Size+spB.Size-1,'Ind',indCSizAB,'Val',valC);
-    
-% If 'shape' is 'circ', all spC's subs outside spA's size are wrapped
-elseif isequal(shape,'circ')
-    % Wrap subsC outside sizeA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    spC = struct('Size',spA.Size,'Ind',indC,'Val',valC);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+elseif isequal(shape,'circ') % Wrap entries around size A
+    % Convert linear indices of spC to subs
+    subsC = spInd2spSub(spC);
+    % Wrap subsC over sizeA
     subsCWrap = mod(subsC-1,spA.Size) + 1;
     % Convert wrapped subsC to linear index for size A
-    indC = spSub2spInd(spA.Size, subsCWrap);
+    indC = spSub2spInd(spA.Size,subsCWrap);
     % Accumulate (sum) over repeated indices
     sparseC = sparse(indC,1,valC);
     % Make into a sparse array structure
     [indC,~,valC] = find(sparseC);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     spC = struct('Size',spA.Size,'Ind',indC,'Val',valC);
-    
-% If 'shape' is 'same', all spC's subs outside spA's size are removed
-elseif isequal(shape,'same')
-    % Remove subsC outside sizeA
-    subsCTrunc = subsC;
-    valC  = valC(all(subsCTrunc<=spA.Size,2),:);
-    subsCTrunc = subsCTrunc(all(subsCTrunc<=spA.Size,2),:); 
-    % convert subsCTrunc to linear index for SizA
-    indC = spSub2spInd(spA.Size,subsCTrunc);
-    % Make into a sparse array structure
-    spC = struct('Size',spA.Size,'Ind',indC,'Val',valC);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
 
 end
