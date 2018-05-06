@@ -1,12 +1,12 @@
 function spC = spTimes(varargin)
 %SPTIMES Entrywise product of sparse array structures and/or scalars.
+%
 %   spC = spTimes(varargin): Entrywise (Hadamard) product of full arrays and/or
 %   scalars, each represented as a sparse array structure or a full arrays The
 %   arrays and scalars can be entered as a comma separated list or as a members
 %   of a cell. The output is a sparse array structure.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also TIMES.
 

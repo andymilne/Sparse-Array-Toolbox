@@ -1,12 +1,12 @@
 function spC = spPerm(spA,order)
 %SPPERM Permute dimensions of sparse array structure.
+%
 %   spC = spPerm(spA,order): Permute the dimensions of the full array
 %   represented as a sparse array structure or a full array. The second
 %   argument is the vector of permutations. The output is a sparse array
 %   structure.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also SPIND2SPSUB, SPSUB2SPIND, PERMUTE.
 

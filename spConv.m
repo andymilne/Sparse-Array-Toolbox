@@ -1,5 +1,6 @@
 function spC = spConv(spA,spB,shape)
 %SPCONV N-dimensional convolution of two N-dimensional sparse array structures.
+%
 %   spC = spConv(spA,spB,shape): N-dimensional convolution of two N-dimensional
 %   full arrays, each represented as a sparse array structure or a full array.
 %   The output is a sparse array structure.
@@ -45,18 +46,18 @@ subsB = spInd2spSub(spB);
 indASzC = spSub2spInd(sizC,subsA);
 indBSzC = spSub2spInd(sizC,subsB);
 
-% Do the convolution
+%% Do the convolution
 indC = indASzC + indBSzC' - 1; % Outer sum of indices, minus 1
 indC = indC(:);
 valC = spA.Val.*spB.Val'; % Outer product of values
 valC = valC(:);
 sparseC = sparse(indC,1,valC); % Accumulate (sum) over repeated indices
 
-% Make sparse array structure for full convolution
+%% Make sparse array structure for full convolution
 [indC,~,valC] = find(sparseC);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 spC = struct('Size',sizC,'Ind',indC,'Val',valC);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if isequal(shape,'same') % Remove entries outside size A
     % Convert linear indices of spC to subs
@@ -69,9 +70,9 @@ if isequal(shape,'same') % Remove entries outside size A
     % convert subsCTrunc to linear index for array of size spA.Size
     indC = spSub2spInd(spA.Size,subsCTrunc);
     % Make into a sparse array structure
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     spC = struct('Size',spA.Size,'Ind',indC,'Val',valC);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 elseif isequal(shape,'circ') % Wrap entries around size A
     % Convert linear indices of spC to subs
     subsC = spInd2spSub(spC);
@@ -83,9 +84,9 @@ elseif isequal(shape,'circ') % Wrap entries around size A
     sparseC = sparse(indC,1,valC);
     % Make into a sparse array structure
     [indC,~,valC] = find(sparseC);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     spC = struct('Size',spA.Size,'Ind',indC,'Val',valC);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
 
 end

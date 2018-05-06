@@ -1,8 +1,9 @@
 function A = spArray2Array(spA)
 %SPARRAY2ARRAY Convert a sparse array structure into a full array. 
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   A = spArray2Array(spA)
+%
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %   
 %   See also ARRAY2SPARRAY.
 

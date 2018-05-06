@@ -1,12 +1,12 @@
 function spC = spPlus(varargin)
 %SPPLUS The sum of sparse array strucures with equivalent size
+%
 %   spC = spPlus(varargin): The sum of identically sized full arrays, each
 %   represented as a sparse array structure or a full array. The sparse
 %   arrays can entered as a comma separated list or as a members of a cell. The
 %   output is a sparse array structure.
 %
-%   Version 1.01 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-13
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also SPARSE, PLUS.
 

@@ -1,13 +1,15 @@
 function spC = spTrunc(lo,hi,spA)
 %SPTRUNC Truncate a sparse array structure.
-%   spC = spTrunc(limits,spA): Truncate a sparse array, represented as a sparse
+%
+%   spC = spTrunc(lo,hi,spA): Truncate a full array, represented as a sparse
 %   array structure or a full array, so all entries with subscripts lower than
 %   the corresponding entries in the row vector 'lo', and higher than the
 %   corresponding entries in the row vector 'hi' are removed. The output is
-%   sparse array structure with size hi-lo+1.
+%   sparse array structure with size hi-lo+1. A nonpostive value for 'lo'
+%   increases the subs, hence is equivalent to zero-padding the start of each 
+%   dimension.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 
 if nargin ~= 3
     error('Three arguments are required.')
@@ -20,7 +22,8 @@ if ~isstruct(spA)
     spA = array2spArray(spA);
 end
 if numel(lo) ~= numel(spA.Size) || numel(hi) ~= numel(spA.Size)
-    error('''lo'' and ''hi'' must have the same number of entries as dimensions in the sparse array structure.')
+    error(['''lo'' and ''hi'' must have the same number of entries as ', ... 
+           'dimensions in the sparse array structure.'])
 end
 
 subsA = spInd2spSub(spA);

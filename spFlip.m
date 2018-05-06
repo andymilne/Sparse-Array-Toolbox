@@ -1,12 +1,12 @@
 function spC = spFlip(spA,dim)
 %SPFLIP Flip order of entries in dimensions specified in 'dim'.
+%
 %   spC = spFlip(spA,dim): Flip the order of entries of the full array,
 %   represented as a sparse array structure or full array, in the dimensions
 %   specified in the row vector or scalar 'dim'. The output is a sparse array
 %   structure.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-16
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also FLIP.
 
@@ -32,12 +32,12 @@ else
     % vector of 1s for flips and 0s for no flips
     logDim(dim) = 1;
     % vector of 1s for flips and -1s for no flips
-    mult = logDim;
-    mult(logDim==0) = -1;
+    signChange = logDim;
+    signChange(logDim==0) = -1;
     % convert to subs
     subA = spInd2spSub(spA);
     % do the flips
-    flipSubA = (logDim.*spA.Size - subA + logDim).*mult;
+    flipSubA = (logDim.*spA.Size - subA + logDim).*signChange;
     % convert to linearindex
     indA = spSub2spInd(spA.Size,flipSubA);
 end

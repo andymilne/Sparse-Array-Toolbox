@@ -1,5 +1,6 @@
 function d = spPDist(spA,spB,p)
 %PDIST p-norm distance between two sparse array structures.
+%
 %   d = spPDist(spA,spB,p): The p-norm distance between two vectorized full
 %   arrays, each represented as a sparse array structure or as a full array.
 %   They must have the same numbers of entries (including zeros). When there
@@ -7,8 +8,7 @@ function d = spPDist(spA,spB,p)
 %   distance between the two vectors; when p = 1, this function gives the
 %   taxicab distance; when p = inf, it gives the maximum difference.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 % 
 %   See also SPCOSSIM.
 
@@ -16,7 +16,8 @@ if nargin < 3
     p = 2;
 end
 if nargin < 2
-    error('There must be exactly two arguments (arrays or sparse array structures).')
+    error(['There must be exactly two arguments (arrays or sparse array ', ...
+           'structures).'])
 end
 
 % Convert full array arguments to sparse array structures

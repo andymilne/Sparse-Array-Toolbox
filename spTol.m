@@ -1,11 +1,11 @@
 function spC = spTol(spA,tol)
 %SPTOL Make all entries with magnitudes smaller than 'tol' equal to zero.
+%
 %   spC = spTol(spA,tol): Make all entries of a full array (represented as a
 %   sparse array structure or a full array) with magnitudes smaller than 'tol'
 %   equal to zero. The output is a sparse array structure
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-16
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also SPTRUNC.
 

@@ -1,8 +1,9 @@
 function subsA = spInd2spSub(spA)
 %SPIND2SPSUB Convert a sparse array's linear index into a matrix of subscripts. 
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   subsA = spInd2spSub(spA)
+%
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %   
 %   See also SPSUB2SPIND, IND2SUB.
 

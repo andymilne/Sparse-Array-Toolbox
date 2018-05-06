@@ -1,8 +1,9 @@
 function indC = spSub2spInd(siz,subsA)
 %SPSUB2SPIND Convert subscripts into linear indices for an array of size 'siz'.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   indC = spSub2spInd(siz,subsA)
+%
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also SPIND2SPSUB, SUB2IND.
 

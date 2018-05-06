@@ -1,5 +1,6 @@
 function spC = spOuter(varargin)
-%SPOUTER THE Outer (tensor) product of sparse array structures.
+%SPOUTER Outer (tensor) product of sparse array structures.
+%
 %   spC = spOuter(varargin): The outer (tensor) product of full arrays, each
 %   represented as a sparse array structure or a full array (or scalar). The
 %   sparse array structures can be entered as a comma separated list or as a
@@ -9,8 +10,7 @@ function spC = spOuter(varargin)
 %   (N,P), the resulting tensor has size (M,N,P), not size (1,M,N,P). The
 %   output is a sparse array structure.
 %
-%   Version 1.0 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 
 % Check whether varargin is a comma separated list or a cell array
 if ~iscell(varargin{1})

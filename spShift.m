@@ -24,8 +24,7 @@ function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %   collapse == 1: the array is summed over this last dimension. Default is
 %   collapse = 0.
 %
-%   Version 1.1 by Andrew J. Milne, The MARCS Institute, Western Sydney
-%   University, 2018-01-09
+%   By Andrew J. Milne, The MARCS Institute, Western Sydney University
 %
 %   See also SPIND2SPSUB, SPSUB2SPIND, SPSUM, CIRCSHIFT.
 
@@ -87,7 +86,7 @@ if isPer == 0
     indA = spSub2spInd(spA.Size+maxShifts-minNegShifts,subShift); 
     % Make the sparse array structure
     spC = struct('Size',spA.Size+maxShifts-minNegShifts,...
-        'Ind',indA,'Val',spA.Val);
+                 'Ind',indA,'Val',spA.Val);
 else
     subShift = mod(shifts+subs-1,spA.Size) + 1;
     % Convert subscripts to linear indices
