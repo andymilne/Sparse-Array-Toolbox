@@ -1,4 +1,4 @@
-function spA = array2spArray(A)
+function spA = array2SpArray(A)
 %ARRAY2SPARRAY Convert a full array into a sparse array structure.
 %
 %   spA = array2spArray(A) A sparse array structure has the following fields:

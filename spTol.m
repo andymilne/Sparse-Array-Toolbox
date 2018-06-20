@@ -11,7 +11,7 @@ function spC = spTol(spA,tol)
 
 % If full array, convert to sparse array structure
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 
 indA = spA.Ind(abs(spA.Val-0)>tol);

@@ -19,14 +19,14 @@ if size(lo,1)>1 || size(hi,1)>1
 end
 % If full array, make into sparse array structure
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 if numel(lo) ~= numel(spA.Size) || numel(hi) ~= numel(spA.Size)
     error(['''lo'' and ''hi'' must have the same number of entries as ', ... 
            'dimensions in the sparse array structure.'])
 end
 
-subsA = spInd2spSub(spA);
+subsA = spInd2SpSub(spA);
 
 dimC = hi-lo+1;
 valC = spA.Val;
@@ -42,7 +42,7 @@ if isempty(subsC)
     indC = [];
     valC = [];
 else
-    indC = spSub2spInd(dimC,subsC);
+    indC = spSub2SpInd(dimC,subsC);
 end
 % Make the sparse array structure
 spC = struct('Size',dimC,'Ind',indC,'Val',valC);

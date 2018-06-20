@@ -22,7 +22,7 @@ nSpA = size(spA,2); % count the number of arguments
 % Convert full array arguments to sparse array structures
 for i = 1:nSpA
     if ~isstruct(spA{i})
-        spA{i} = array2spArray(spA{i});
+        spA{i} = array2SpArray(spA{i});
     end
 end
 

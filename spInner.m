@@ -26,7 +26,7 @@ end
 % Convert full array arguments to sparse array structures
 for i = 1:nSpA
     if ~isstruct(spA{i})
-        spA{i} = array2spArray(spA{i});
+        spA{i} = array2SpArray(spA{i});
     end
 end
 

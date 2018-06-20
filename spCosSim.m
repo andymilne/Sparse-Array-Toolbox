@@ -18,10 +18,10 @@ end
 
 % Convert full array arguments to sparse array structures
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 if ~isstruct(spB)
-    spB = array2spArray(spB);
+    spB = array2SpArray(spB);
 end
 
 spANew = ~isequal(spA,spALast);

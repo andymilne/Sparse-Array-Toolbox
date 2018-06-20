@@ -41,7 +41,7 @@ end
 
 % If full array, convert to sparse array structure
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 
 nDimA = size(spA.Size,2);
@@ -63,7 +63,7 @@ if size(shifts,1)~=1 && size(shifts,1)~=numel(spA.Ind)
 end
 
 % Convert linear indices to subscripts
-subs = spInd2spSub(spA);
+subs = spInd2SpSub(spA);
 % Calculate progressive shifts (if isProg==1)
 if isProg == 1
     % make shift proportional subscript in last dimension
@@ -83,14 +83,14 @@ if isPer == 0
     subShift = subShift - minNegShifts; % offset shifts
     maxShifts = max(shifts,[],1); % greatest shift in each dimension
     % Convert subscripts to linear indices and expand array, if necessary
-    indA = spSub2spInd(spA.Size+maxShifts-minNegShifts,subShift); 
+    indA = spSub2SpInd(spA.Size+maxShifts-minNegShifts,subShift); 
     % Make the sparse array structure
     spC = struct('Size',spA.Size+maxShifts-minNegShifts,...
                  'Ind',indA,'Val',spA.Val);
 else
     subShift = mod(shifts+subs-1,spA.Size) + 1;
     % Convert subscripts to linear indices
-    indA = spSub2spInd(spA.Size,subShift);
+    indA = spSub2SpInd(spA.Size,subShift);
     % Accumulate (sum) over repeated indices
     sparseC = sparse(indA,1,spA.Val);
     % Make the sparse array structure

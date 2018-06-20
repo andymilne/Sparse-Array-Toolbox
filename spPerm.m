@@ -12,12 +12,12 @@ function spC = spPerm(spA,order)
 
 % If full array, convert to sparse array structure
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 
-subA = spInd2spSub(spA); % Get subscripts
+subA = spInd2SpSub(spA); % Get subscripts
 subAPerm = subA(:,order); % Permute subscripts
-indA = spSub2spInd(spA.Size,subAPerm); % convert subs to linear index
+indA = spSub2SpInd(spA.Size,subAPerm); % convert subs to linear index
 
 spC = struct('Size',spA.Size,'Ind',indA,'Val',spA.Val);
 

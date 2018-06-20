@@ -11,7 +11,7 @@ function spC = spSum(spA,dim)
 
 % If full array, convert to sparse array structure
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 
 sumDim = spA.Size;
@@ -19,9 +19,9 @@ if dim <= numel(spA.Size)
     sumDim(dim) = [];
 end
 
-subA = spInd2spSub(spA); % get subscripts
+subA = spInd2SpSub(spA); % get subscripts
 subA(:,dim) = 1; % collapse over dim
-indA = spSub2spInd(spA.Size,subA); % convert to linear index
+indA = spSub2SpInd(spA.Size,subA); % convert to linear index
 sumSpTerm = sparse(indA,1,spA.Val); % sum over repeated indices
 
 [indA,~,valA] = find(sumSpTerm);

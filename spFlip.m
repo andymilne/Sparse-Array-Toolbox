@@ -15,7 +15,7 @@ if nargin < 2
     error('Two arguments are required.')
 end
 if ~isstruct(spA)
-    spA = array2spArray(spA);
+    spA = array2SpArray(spA);
 end
 if any(dim<1)
     error('All entries in ''dim'' must be positive integers.')
@@ -35,11 +35,11 @@ else
     signChange = logDim;
     signChange(logDim==0) = -1;
     % convert to subs
-    subA = spInd2spSub(spA);
+    subA = spInd2SpSub(spA);
     % do the flips
     flipSubA = (logDim.*spA.Size - subA + logDim).*signChange;
     % convert to linearindex
-    indA = spSub2spInd(spA.Size,flipSubA);
+    indA = spSub2SpInd(spA.Size,flipSubA);
 end
 
 % Make the sparse array structure

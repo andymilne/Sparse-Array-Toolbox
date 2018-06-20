@@ -38,13 +38,13 @@ end
 %% Convert indices to those of an array of size spA.Size+spB.Size-1
 sizC = spA.Size+spB.Size-1;
 % Convert linear indices to subscripts
-subsA = spInd2spSub(spA);
-subsB = spInd2spSub(spB);
+subsA = spInd2SpSub(spA);
+subsB = spInd2SpSub(spB);
 % Convert subscripts back to a linear indices, but taking the size
 % of the array to be the same as spA + spB - 1 (in non-sparse terms,
 % this is zero padding)
-indASzC = spSub2spInd(sizC,subsA);
-indBSzC = spSub2spInd(sizC,subsB);
+indASzC = spSub2SpInd(sizC,subsA);
+indBSzC = spSub2SpInd(sizC,subsB);
 
 %% Do the convolution
 indC = indASzC + indBSzC' - 1; % Outer sum of indices, minus 1
@@ -61,25 +61,25 @@ spC = struct('Size',sizC,'Ind',indC,'Val',valC);
 
 if isequal(shape,'same') % Remove entries outside size A
     % Convert linear indices of spC to subs
-    subsC = spInd2spSub(spC);
+    subsC = spInd2SpSub(spC);
     % Remove subsC outside sizeA
     subsCTrunc = subsC;
     indCTrunc = all(subsCTrunc<=spA.Size,2);
     valC = valC(indCTrunc,:);
     subsCTrunc = subsCTrunc(indCTrunc,:);
     % convert subsCTrunc to linear index for array of size spA.Size
-    indC = spSub2spInd(spA.Size,subsCTrunc);
+    indC = spSub2SpInd(spA.Size,subsCTrunc);
     % Make into a sparse array structure
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     spC = struct('Size',spA.Size,'Ind',indC,'Val',valC);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 elseif isequal(shape,'circ') % Wrap entries around size A
     % Convert linear indices of spC to subs
-    subsC = spInd2spSub(spC);
+    subsC = spInd2SpSub(spC);
     % Wrap subsC over sizeA
     subsCWrap = mod(subsC-1,spA.Size) + 1;
     % Convert wrapped subsC to linear index for size A
-    indC = spSub2spInd(spA.Size,subsCWrap);
+    indC = spSub2SpInd(spA.Size,subsCWrap);
     % Accumulate (sum) over repeated indices
     sparseC = sparse(indC,1,valC);
     % Make into a sparse array structure
