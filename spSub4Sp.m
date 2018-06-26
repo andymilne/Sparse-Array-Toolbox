@@ -5,7 +5,6 @@ function a = spSub4Sp(spA,subs)
 %
 %   See also: spSub2spInd, spInd2Sub, sub2ind, ind2sub.
 
-spA.Size
 if ~isequal(numel(spA.Size), numel(subs))
     error(['The subscripts vector must have the same number of entries as' ... 
            'the sparse array has dimensions'])
