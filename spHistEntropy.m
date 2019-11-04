@@ -1,4 +1,4 @@
-function h = spHistEntropy(spA)
+function h = spHistEntropy(spA,isNorm)
 %SPHISTENTROPY Normalized entropy of a histogram in sparse array format.
 %
 %   h = spHistEntropy(v): Normalized entropy of a histogram v, where the
@@ -10,6 +10,10 @@ function h = spHistEntropy(spA)
 %   By Andrew J. Milne, The MARCS Institute, Western Sydney University.
 
 
+if nargin < 2
+    isNorm = 1;
+end
+
 % Normalize to make into probability mass function
 histNorm = spA.Val./sum(spA.Val);
 
@@ -19,6 +23,11 @@ N = prod(spA.Size);
 % Calculate entropy
 logHistNorm = -log(histNorm);
 logHistNorm(isinf(logHistNorm)) = 0;
-h = histNorm'*logHistNorm/log(N);
+
+if isNorm == 1
+    h = histNorm'*logHistNorm/log(N);
+else
+    h = histNorm'*logHistNorm;
+end
 
 end
