@@ -14,5 +14,8 @@ index = spSub2SpInd(spA.Size, subs);
 indexLoc = spA.Ind == index;
 
 a = spA.Val(indexLoc);
+if isempty(a)
+    a = 0;
+end
 
 end
