@@ -9,7 +9,7 @@ function spC = spShift(spA,shifts,isPer,isProg,collapse)
 %   When 'shifts' is a row vector, all entries of the array are shifted by the
 %   amounts specified in 'shifts': the nth entry of 'shifts' is the shift for
 %   the nth dimension of the N-dimensional array. When 'shifts' is a matrix,
-%   its mth row gives the N-diensional shift for the mth nonzero element of the
+%   its mth row gives the N-dimensional shift for the mth nonzero element of the
 %   full array (i.e., the mth entry of sparse array structure's 'Ind' and 'Val'
 %   fields).
 %
